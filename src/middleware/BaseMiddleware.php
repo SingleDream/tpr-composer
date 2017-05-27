@@ -11,7 +11,6 @@
 
 namespace axios\tpr\middleware;
 
-use axios\tpr\service\GlobalService;
 use think\Controller;
 use think\Request;
 
