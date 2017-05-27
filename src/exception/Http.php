@@ -9,7 +9,7 @@
 // | Author: axios <axioscros@aliyun.com>
 // +----------------------------------------------------------------------
 
-namespace axios\tpr\core;
+namespace axios\tpr\exception;
 
 use Exception;
 use think\Env;
@@ -21,13 +21,13 @@ class Http extends Handle{
     {
         //TODO::开发者对异常的操作
         //可以在此交由系统处理
-        if(Env::get('global.status',false)){
+        if(Env::get('debug.status')){
             return parent::render($e);
         }else{
             $req['code']= "500";
             $req['message'] = "something error";
             $req['data'] = [];
-            $return_type = Env::get('api.return_type','json');
+            $return_type = Env::get('response.return_type');
             if(empty($return_type)){
                 $return_type = "json";
             }

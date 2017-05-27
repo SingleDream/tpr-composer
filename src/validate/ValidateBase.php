@@ -9,10 +9,18 @@
 // | Author: axios <axioscros@aliyun.com>
 // +----------------------------------------------------------------------
 
-define('ROOT_PATH',__DIR__.'/');
-define('APP_PATH', ROOT_PATH . 'example/app/');
-define('CONF_PATH', ROOT_PATH.'example/config/');
-define('RUNTIME_PATH', ROOT_PATH . 'example/runtime/');
+namespace axios\tpr\validate;
 
-// 加载框架引导文件
-require './thinkphp/console.php';
+use axios\tpr\service\LangService;
+use think\Validate;
+
+class ValidateBase extends Validate{
+    function __construct(array $rules = [], array $message = [], array $field = [])
+    {
+        parent::__construct($rules, $message, $field);
+    }
+
+    public function getError(){
+        return LangService::trans($this->error);
+    }
+}

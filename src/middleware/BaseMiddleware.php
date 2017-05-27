@@ -9,40 +9,20 @@
 // | Author: axios <axioscros@aliyun.com>
 // +----------------------------------------------------------------------
 
-namespace axios\tpr\core;
+namespace axios\tpr\middleware;
 
+use axios\tpr\service\GlobalService;
 use think\Controller;
 use think\Request;
 
-class Api extends Controller{
-    protected $param;
+class BaseMiddleware extends Controller {
+    protected $param ;
 
-    protected $return_type;
-
-    protected $toString = false;
+    protected $method ;
 
     function __construct(Request $request = null)
     {
         parent::__construct($request);
         $this->param = $this->request->param();
-    }
-
-    protected function wrong($code,$message=''){
-        $this->rep([],$code,$message);
-    }
-
-    protected function rep($data=[],$code=200,$message='',array $header=[]){
-        $req = Result::instance($this->return_type,$this->toString)->rep($data,$code,$message,$header);
-        $this->request->req = $req;
-        Cache::set($req,$this->request);
-    }
-
-    protected function response($data=[],$code=200,$message='',array $header=[]){
-        $this->toString = true;
-        $this->rep($data,$code,$message,$header);
-    }
-
-    public function __empty(){
-        $this->wrong(404);
     }
 }

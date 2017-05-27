@@ -124,26 +124,3 @@ if(!function_exists('arrayDataToString')){
         return $array;
     }
 }
-
-if(!function_exists('objectToArray')){
-    function objectToArray($object) {
-        $object =  json_decode( json_encode( $object),true);
-        return  $object;
-    }
-}
-
-if(!function_exists('check_sign')){
-    function check_sign($post_timestamp,$post_sign){
-        $sign = md5($post_timestamp."tpr");
-        return $post_sign!=$sign?$sign:true;
-    }
-}
-
-if(!function_exists('tpr_read_env')){
-    function tpr_read_env(){
-        if (is_file(ROOT_PATH . '.env')) {
-            return parse_ini_file(ROOT_PATH . '.env', true);
-        }
-        return false;
-    }
-}

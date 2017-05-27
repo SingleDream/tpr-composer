@@ -15,7 +15,7 @@ use think\Config;
 
 class LangService {
 
-    public static function trans($message,$sub=' '){
+    public static function trans($message){
         $messageArray = explode('@', $message);
         $str = '';
         foreach ($messageArray as $k=>$m){
@@ -24,7 +24,7 @@ class LangService {
             }
             $tmp = lang($m);
             if($m===$tmp){
-                $str.=$k==0?$m:$sub.$m;
+                $str.=$k==0?$m:" ".$m;
             }else{
                 $str.=$tmp;
             }

@@ -59,8 +59,7 @@ class LogMongodb{
         $runtime    = round(microtime(true) - THINK_START_TIME, 10);
         $qps        = $runtime > 0 ? number_format(1 / $runtime, 2). 'req/s' : '∞'. 'req/s';
         $runtime_str=  number_format($runtime, 6) . 's';
-        $memory_use = number_format((memory_get_usage() - THINK_START_MEM) / 1024, 4);
-        $memory_use = $this->memoryUse($memory_use,0);
+        $memory_use = number_format((memory_get_usage() - THINK_START_MEM) / 1024, 2);
         $file_load  = count(get_included_files());
         $server     = isset($_SERVER['SERVER_ADDR']) ? $_SERVER['SERVER_ADDR'] : '0.0.0.0';
         $remote     = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '0.0.0.0';
@@ -105,22 +104,10 @@ class LogMongodb{
                 $this->log(array_merge($insert,["log_type"=>$type],$content),$type);
             }
         }
-        $insert['log_type'] = isset($type)?$type:"info";
+        $insert['log_type'] = isset($type)?$type:"";
         $insert['log'] = $content;
         $this->log($insert);
         return true;
-    }
-
-    protected function memoryUse($memory_use ,$unit )
-    {
-        $units = ["kb", "gb", "tb", "pb"];
-        if ($memory_use > 1024) {
-            $memory_use = number_format($memory_use / 1024, 4);
-            $unit++;
-            return $this->memoryUse($memory_use, $unit);
-        } else {
-            return $memory_use . $units[$unit];
-        }
     }
 
     protected function log($insert=[],$database=''){
